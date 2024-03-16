@@ -22,7 +22,6 @@ void execucaoJogoDaVida(int** matriz, int linhas, int colunas, int qntGeracoes) 
 
 int main() {
     std::string nomeArquivo = "datasets/input.mps"; // Caminho para o arquivo input.mps
-
     int linhas, colunas;
     int** matriz = lerMatriz(nomeArquivo, linhas, colunas);
     int qntGeracoes; 

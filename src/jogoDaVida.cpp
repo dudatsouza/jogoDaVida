@@ -62,8 +62,31 @@ int** lerMatriz(std::string nomeArquivo, int& linhas, int& colunas) {
             arquivo >> matriz[i][j];
         }
     }
+
     // Fechar o arquivo
     arquivo.close();
+
+    // Verificar se a matriz esta em formato 2 para 1 para compor os valores 0s e 1s, sendo número de 1s em menor quantidade
+    int contador1 = 0;
+    int contador0 = 0;
+    for (int i = 0; i < linhas; ++i) {
+        for (int j = 0; j < colunas; ++j) {
+            if (matriz[i][j] == 1) {
+                contador1++;
+            } else {
+                contador0++;
+            }
+        }
+    } 
+
+    // A cada 2 0s, tem que ter 1 1
+    if ((contador0/2) <= contador1) {
+        std::cerr << "A matriz lida do arquivo não está em formato 2 para 1. Tendo " << contador1 << " quantidade de 1s e " << contador0 << " quantidade de 0s." << std::endl;
+        return nullptr;
+    } else {
+        std::cout << "A matriz lida do arquivo está em formato 2 para 1. Tendo " << contador1 << " quantidade de 1s e " << contador0 << " quantidade de 0s." << std::endl;
+    }
+
 
 // colocara matriz no arquivo geracoes.mps
     std::ofstream arquivo2("datasets/geracoes.mps");
@@ -92,15 +115,7 @@ void liberarMatriz(int** matriz, int linhas) {
 }
 
 int** gerarProximaMatriz(int** matriz, int linhas, int colunas){
-// - Uma célula viva com menos de dois vizinhos vivos morre (solidão).
-// - Uma célula viva com mais de três vizinhos vivos morre (superpopulação).
-// - Uma célula viva com dois ou três vizinhos vivos sobrevive.
-// - Uma célula morta com exatamente três vizinhos vivos se torna viva (reprodução).
-
-//  A cada interação, faça as avaliações utilizando a matriz atual e produza os
-// resultados da avaliação em uma nova matriz. Feito isso, salve a matriz avaliada
-// como parte de seus resultados em um arquivo chamado geracoes.mps.
-
+    // Alocar a matriz auxiliar dinamicamente
     int **matrizNova = new int*[linhas];
     for (int i = 0; i < linhas; ++i) {
         matrizNova[i] = new int[colunas];
@@ -112,47 +127,64 @@ int** gerarProximaMatriz(int** matriz, int linhas, int colunas){
         }
     }
 
+    // Analisar cada célula da matriz
     for (int i = 0; i < linhas; ++i) {
         for (int j = 0; j < colunas; ++j) {
+
+            // Verificar a quantidade de vizinhos de cada célula
+            std::cout << "\nOlhando a posição" << i << ", " << j << ": " << matriz[i][j] << std::endl;
             int vizinhos = 0;
             if (i > 0 && j > 0 && matriz[i-1][j-1] == 1) {
+                std::cout << "Vizinho em cima e a esquerda. Posiçao: " << i-1 << ", " << j-1 << std::endl;
                 vizinhos++;
             }
             if (i > 0 && matriz[i-1][j] == 1) {
+                std::cout << "Vizinho em cima. Posiçao: " << i-1 << ", " << j << std::endl;
                 vizinhos++;
             }
             if (i > 0 && j < colunas-1 && matriz[i-1][j+1] == 1) {
+                std::cout << "Vizinho em cima e a direita. Posiçao: " << i-1 << ", " << j+1 << std::endl;
                 vizinhos++;
             }
             if (j > 0 && matriz[i][j-1] == 1) {
+                std::cout << "Vizinho a esquerda. Posiçao: " << i << ", " << j-1 << std::endl;
                 vizinhos++;
             }
             if (j < colunas-1 && matriz[i][j+1] == 1) {
+                std::cout << "Vizinho a direita. Posiçao: " << i << ", " << j+1 << std::endl;
                 vizinhos++;
             }
             if (i < linhas-1 && j > 0 && matriz[i+1][j-1] == 1) {
+                std::cout << "Vizinho em baixo e a esquerda. Posiçao: " << i+1 << ", " << j-1 << std::endl;
                 vizinhos++;
             }
             if (i < linhas-1 && matriz[i+1][j] == 1) {
+                std::cout << "Vizinho em baixo. Posiçao: " << i+1 << ", " << j << std::endl;
                 vizinhos++;
             }
             if (i < linhas-1 && j < colunas-1 && matriz[i+1][j+1] == 1) {
+                std::cout << "Vizinho em baixo e a direita. Posiçao: " << i+1 << ", " << j+1 << std::endl;
                 vizinhos++;
             }
 
+            std::cout << "Vizinhos: " << vizinhos << std::endl;
+
+            // Aplicar as regras do jogo
             if (matriz[i][j] == 1) {
                 if (vizinhos < 2 || vizinhos > 3) {
+                    std::cout << "Matando a célula em " << i << ", " << j << std::endl;
                     matrizNova[i][j] = 0;
                 }
             } else {
                 if (vizinhos == 3) {
+                    std::cout << "Revivendo a célula em " << i << ", " << j << std::endl;
                     matrizNova[i][j] = 1;
                 }
             }
         }
     }
 
-// o arquivo tem q salvar todas as gerações, ou seja, nao pode sobrescrever
+    // Escrever a matriz gerada no arquivo geracoes.mps
     std::ofstream arquivo("datasets/geracoes.mps", std::ios::app);
     if (arquivo.is_open()) {
         for (int i = 0; i < linhas; ++i) {
