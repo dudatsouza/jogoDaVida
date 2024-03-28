@@ -1,4 +1,10 @@
 #  🎮 Jogo da Vida em C++
+<div align="center">
+<!-- imagem -->
+
+![Make](https://img.shields.io/badge/Compilacao-Make-green)
+![Linguagem](https://img.shields.io/badge/Linguagem-C%2B%2B-blue)
+</div>
 
 <details>
   <summary>📌 Tópicos</summary>
@@ -156,7 +162,7 @@ O programa implementa o Jogo da Vida seguindo as regras clássicas estabelecidas
 
 Essa é uma visão geral detalhada de como o programa implementa o Jogo da Vida. Para detalhes técnicos mais específicos, consulte o código-fonte fornecido.
 
-## Estrutura de Diretórios
+## 📂 Estrutura de Diretórios
 
 O programa segue uma estrutura de diretórios bem definida para organizar seus arquivos e recursos. Aqui está uma breve explicação de cada diretório:
 
@@ -222,7 +228,7 @@ O programa segue uma estrutura de diretórios bem definida para organizar seus a
 
 Você pode encontrar exemplos de arquivos de entrada (`input.mps`) e de saida (`geracoes.mps`) na pasta `datasets/`.
 
-## 🛠️ Makefile
+## ⛏ Makefile
 
 O Makefile é um utilitário que automatiza o processo de compilação e execução de programas. Aqui estão os principais comandos do Makefile para este projeto:
 
@@ -239,8 +245,5 @@ Para mais informações ou sugestões, sinta-se à vontade para entrar em contat
 - ✉️ **E-mail**: [![Gmail Badge](https://img.shields.io/badge/-dudateixeirasouza@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:dudateixeirasouza@gmail.com)](mailto:dudateixeirasouza@gmail.com)
 - 💼 **LinkedIn**: [![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-0e76a8?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/maria-eduarda-teixeira-souza-2a2b3a254/)
 - 📸 **Instagram**: [![Instagram Badge](https://img.shields.io/badge/-Instagram-e4405f?style=flat-square&logo=Instagram&logoColor=white)](https://www.instagram.com/dudat_18/)
-
-
-
 
 Ficarei feliz em receber feedbacks, contribuições ou responder a quaisquer dúvidas que você possa ter sobre o programa. 
