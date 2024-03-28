@@ -1,7 +1,4 @@
 #include "jogoDaVida.hpp"
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 int** lerMatriz(std::string nomeArquivo, int& linhas, int& colunas) {
     // Abrindo o arquivo
@@ -66,7 +63,30 @@ int** lerMatriz(std::string nomeArquivo, int& linhas, int& colunas) {
     // Fechar o arquivo
     arquivo.close();
 
-    // Verificar se a matriz esta em formato 2 para 1 para compor os valores 0s e 1s, sendo número de 1s em menor quantidade
+    if(!verificarFormatoMatriz(matriz, linhas, colunas)) {
+        return nullptr;
+    }
+
+    // colocar a matriz no arquivo
+    std::ofstream arquivo2("datasets/geracoes.mps");
+    if (arquivo2.is_open()) {
+        for (int i = 0; i < linhas; ++i) {
+            for (int j = 0; j < colunas; ++j) {
+                arquivo2 << matriz[i][j] << " ";
+            }
+            arquivo2 << std::endl;
+        }
+        arquivo2 << std::endl;
+        arquivo2.close();
+    } else {
+        std::cerr << "Erro ao abrir o arquivo geracoes.mps" << std::endl;
+        return nullptr;
+    }
+
+    return matriz;
+}
+
+bool verificarFormatoMatriz(int **matriz, int linhas, int colunas) {
     int contador1 = 0;
     int contador0 = 0;
     for (int i = 0; i < linhas; ++i) {
@@ -82,29 +102,10 @@ int** lerMatriz(std::string nomeArquivo, int& linhas, int& colunas) {
     // A cada 2 0s, tem que ter 1 1
     if ((contador0/2) <= contador1) {
         std::cerr << "A matriz lida do arquivo não está em formato 2 para 1. Tendo " << contador1 << " quantidade de 1s e " << contador0 << " quantidade de 0s." << std::endl;
-        return nullptr;
-    } else {
-        std::cout << "A matriz lida do arquivo está em formato 2 para 1. Tendo " << contador1 << " quantidade de 1s e " << contador0 << " quantidade de 0s." << std::endl;
+        return false;
     }
-
-
-// colocara matriz no arquivo geracoes.mps
-    std::ofstream arquivo2("datasets/geracoes.mps");
-    if (arquivo2.is_open()) {
-        for (int i = 0; i < linhas; ++i) {
-            for (int j = 0; j < colunas; ++j) {
-                arquivo2 << matriz[i][j] << " ";
-            }
-            arquivo2 << std::endl;
-        }
-        arquivo2 << std::endl;
-        arquivo2.close();
-    } else {
-        std::cerr << "Erro ao abrir o arquivo geracoes.mps" << std::endl;
-    }
-
-
-    return matriz;
+    
+    return true;
 }
 
 void liberarMatriz(int** matriz, int linhas) {
@@ -132,59 +133,48 @@ int** gerarProximaMatriz(int** matriz, int linhas, int colunas){
         for (int j = 0; j < colunas; ++j) {
 
             // Verificar a quantidade de vizinhos de cada célula
-            std::cout << "\nOlhando a posição" << i << ", " << j << ": " << matriz[i][j] << std::endl;
             int vizinhos = 0;
             if (i > 0 && j > 0 && matriz[i-1][j-1] == 1) {
-                std::cout << "Vizinho em cima e a esquerda. Posiçao: " << i-1 << ", " << j-1 << std::endl;
                 vizinhos++;
             }
             if (i > 0 && matriz[i-1][j] == 1) {
-                std::cout << "Vizinho em cima. Posiçao: " << i-1 << ", " << j << std::endl;
                 vizinhos++;
             }
             if (i > 0 && j < colunas-1 && matriz[i-1][j+1] == 1) {
-                std::cout << "Vizinho em cima e a direita. Posiçao: " << i-1 << ", " << j+1 << std::endl;
                 vizinhos++;
             }
             if (j > 0 && matriz[i][j-1] == 1) {
-                std::cout << "Vizinho a esquerda. Posiçao: " << i << ", " << j-1 << std::endl;
                 vizinhos++;
             }
             if (j < colunas-1 && matriz[i][j+1] == 1) {
-                std::cout << "Vizinho a direita. Posiçao: " << i << ", " << j+1 << std::endl;
                 vizinhos++;
             }
             if (i < linhas-1 && j > 0 && matriz[i+1][j-1] == 1) {
-                std::cout << "Vizinho em baixo e a esquerda. Posiçao: " << i+1 << ", " << j-1 << std::endl;
                 vizinhos++;
             }
             if (i < linhas-1 && matriz[i+1][j] == 1) {
-                std::cout << "Vizinho em baixo. Posiçao: " << i+1 << ", " << j << std::endl;
                 vizinhos++;
             }
             if (i < linhas-1 && j < colunas-1 && matriz[i+1][j+1] == 1) {
-                std::cout << "Vizinho em baixo e a direita. Posiçao: " << i+1 << ", " << j+1 << std::endl;
                 vizinhos++;
             }
 
-            std::cout << "Vizinhos: " << vizinhos << std::endl;
-
             // Aplicar as regras do jogo
-            if (matriz[i][j] == 1) {
-                if (vizinhos < 2 || vizinhos > 3) {
-                    std::cout << "Matando a célula em " << i << ", " << j << std::endl;
+            if (matriz[i][j] == 1) { 
+                if (vizinhos == 2 || vizinhos == 3) {
+                    matrizNova[i][j] = 1;
+                } else if (vizinhos < 2 || vizinhos > 3) {
                     matrizNova[i][j] = 0;
                 }
             } else {
                 if (vizinhos == 3) {
-                    std::cout << "Revivendo a célula em " << i << ", " << j << std::endl;
                     matrizNova[i][j] = 1;
                 }
             }
         }
     }
 
-    // Escrever a matriz gerada no arquivo geracoes.mps
+    // colocar a matriz no arquivo
     std::ofstream arquivo("datasets/geracoes.mps", std::ios::app);
     if (arquivo.is_open()) {
         for (int i = 0; i < linhas; ++i) {
@@ -197,6 +187,7 @@ int** gerarProximaMatriz(int** matriz, int linhas, int colunas){
         arquivo.close();
     } else {
         std::cerr << "Erro ao abrir o arquivo geracoes.mps" << std::endl;
+        return nullptr;
     }
 
     return matrizNova;

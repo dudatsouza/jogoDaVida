@@ -1,10 +1,11 @@
-#include <iostream>
-#include <string>
 #include "jogoDaVida.hpp"
 
 void pedirNumeroGeracoes(int& qntGeracoes) {
-    std::cout << "Digite a quantidade de gerações: ";
+    system("clear");
+    std::cout << "--- Jogo da Vida ---\n";
+    std::cout << "Seja bem-vindo! \nQuantas gerações você deseja simular? (Digite um número inteiro)\n";
     std::cin >> qntGeracoes;
+    std::cout << "\nIniciando simulação do Jogo da Vida com " << qntGeracoes << " gerações...\n--------" << std::endl;
 }
 
 void execucaoJogoDaVida(int** matriz, int linhas, int colunas, int qntGeracoes) {
@@ -16,7 +17,7 @@ void execucaoJogoDaVida(int** matriz, int linhas, int colunas, int qntGeracoes) 
         }
     }
 
-    std::cout << "Todas as gerações finalizadas com sucesso! Os resultados estao disponiveis no arquivo 'geracoes.mps'" << std::endl;
+    std::cout << "\nTodas as gerações finalizadas com sucesso! \nOs resultados estao disponiveis no arquivo 'geracoes.mps'\n--------" << std::endl;
     liberarMatriz(matrizNova, linhas);
 }
 
