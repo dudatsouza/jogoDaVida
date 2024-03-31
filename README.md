@@ -1,9 +1,10 @@
 #  🎮 Jogo da Vida em C++
-<div align="center">
-<!-- imagem -->
 
-![Make](https://img.shields.io/badge/Compilacao-Make-green)
-![Linguagem](https://img.shields.io/badge/Linguagem-C%2B%2B-blue)
+<div align="center">
+   <img align="center" height="20px" width="80px" src="https://img.shields.io/badge/Ubuntu-orange?logo=ubuntu">
+   <img align="center" height="20px" width="80px" src="https://img.shields.io/badge/VS%20Code-blue?logo=visual%20studio%20code"/>
+   <img align="center" height="20px" width="80px" src="https://img.shields.io/badge/MakeFile-green?logo=make">
+   <img align="center" height="20px" width="60px" src="https://img.shields.io/badge/C%2B%2B-darkblue?logo=c%2B%2B"/>
 </div>
 
 <details>
@@ -12,6 +13,7 @@
         <li><a href="#descricao">Descrição</a></li>
         <li><a href="#funcionalidades">Funcionalidades</a></li>
         <li><a href="#implementacao-do-jogo-da-vida">Implementação do Jogo da Vida</a></li>
+        <li><a href="#estrutura-de-diretorios">Estrutura de Diretórios</a></li>
         <li><a href="#como-usar">Como Usar</a></li>
         <li><a href="#exemplos">Exemplos</a></li>
         <li><a href="#makefile">MakeFile</a></li>
@@ -21,7 +23,7 @@
 
 ## 📝 Descrição
 
-Este é um programa em C++ que implementa o famoso "Jogo da Vida" de Conway. O Jogo da Vida é um autômato celular desenvolvido pelo matemático britânico John Horton Conway em 1970. Ele é um jogo de "zero jogadores", o que significa que sua evolução é determinada por seu estado inicial, não exigindo mais nenhuma entrada do usuário. O jogo se desenrola em uma grade bidimensional de células, cada uma das quais pode estar viva ou morta. As regras para a evolução das células são simples e se baseiam em três princípios:
+Este é um programa em C++ que implementa o famoso "Jogo da Vida" de Conway. O Jogo da Vida é um autômato celular desenvolvido pelo matemático britânico John Horton Conway em 1970. Ele é um jogo de "zero jogadores", o que significa que sua evolução é determinada por seu estado inicial, não exigindo mais nenhuma entrada do usuário. O jogo se desenrola em uma grade bidimensional de células, cada uma das quais pode estar viva ou morta. As regras para a evolução das células são simples e se baseiam em:
 
 1. **SOBREVIVÊNCIA**:  
 <img src="./images/imgs_readme/sobrevivencia.png" alt="Sobrevivência" width="500" height="250">
@@ -35,14 +37,12 @@ Este é um programa em C++ que implementa o famoso "Jogo da Vida" de Conway. O J
 4. **Reprodução**:   
 <img src="./images/imgs_readme/reproducao.png" alt="Reprodução" width="500" height="250">
 
-
 Este programa em C++ permite que você forneça uma configuração inicial de células vivas e observe como elas evoluem ao longo do tempo, seguindo as regras do Jogo da Vida.
 
 ## ⚙️ Funcionalidades
-
 O programa oferece diversas funcionalidades para interagir com o Jogo da Vida e analisar suas gerações. Aqui estão as principais:
 
-1. **Leitura de Configuração Inicial**: O programa permite ao usuário fornecer uma configuração inicial do jogo por meio do arquivo de entrada `input.mps`, disponível na pasta `datasets`. Isso oferece flexibilidade para experimentar diferentes padrões e configurações.
+1. **Leitura de Configuração Inicial**: O programa permite ao usuário fornecer uma configuração inicial do jogo por meio do arquivo de entrada `input.mps`, disponível na pasta `/datasets`. Isso oferece flexibilidade para experimentar diferentes padrões e configurações.
 
 2. **Geração de Gerações**: O programa solicita ao usuário a quantidade de gerações a serem geradas. Isso é feito por meio da função `pedirNumeroGeracoes`, como mostrado no trecho de código abaixo:
    ```cpp
@@ -56,15 +56,12 @@ O programa oferece diversas funcionalidades para interagir com o Jogo da Vida e 
    ```
     <img src="./images/imgs_readme/solicitacaoDeGeracoes.png" alt="Solicitação de Gerações" >
 
-3. **Aplicação das Regras do Jogo**: Implementa as regras clássicas do Jogo da Vida de acordo com as especificações de John Conway. As regras são aplicadas de forma eficiente para determinar o estado de cada célula em cada geração. Detalhes específicos sobre como as regras são aplicadas serão explicados na seção de implementação abaixo.
+3. **Aplicação das Regras do Jogo**: Implementa as regras clássicas do Jogo da Vida de acordo com as especificações. As regras são aplicadas de forma eficiente para determinar o estado de cada célula em cada geração. Detalhes específicos sobre como as regras são aplicadas serão explicados na seção de implementação abaixo.
 
-4. **Saída de Resultados**: Após a geração das gerações desejadas, o programa salva os resultados no arquivo `geracoes.mps` na pasta `datasets`. Isso permite que o usuário analise as gerações geradas fora do programa, se necessário.
-
-Essas funcionalidades combinadas oferecem uma experiência abrangente ao interagir com o Jogo da Vida e permitem explorar suas propriedades e comportamentos de forma eficaz.
+4. **Saída de Resultados**: Após a geração das gerações desejadas, o programa salva os resultados no arquivo `geracoes.mps` na pasta `/datasets`. Isso permite que o usuário analise as gerações geradas fora do programa, se necessário.
 
 ## 🛠️ Implementação do Jogo da Vida
-
-O programa implementa o Jogo da Vida seguindo as regras clássicas estabelecidas por John Conway. Aqui está uma visão geral de como isso é feito:
+O programa implementa o Jogo da Vida seguindo as regras clássicas estabelecidas. Aqui está uma visão geral de como isso é feito:
 
 1. **Leitura da Configuração Inicial**: O programa lê uma matriz representando a configuração inicial do jogo a partir de um arquivo fornecido pelo usuário. A matriz pode conter células vivas (representadas pelo valor 1) e células mortas (representadas pelo valor 0). (Veja a função `lerMatriz` no arquivo `jogoDaVida.cpp`).
 
@@ -137,22 +134,28 @@ O programa implementa o Jogo da Vida seguindo as regras clássicas estabelecidas
    - **Aplicação das Regras**: Com base no número de vizinhos vivos, o programa decide o estado da célula na próxima geração, seguindo as regras do Jogo da Vida. Abaixo estão os trechos de código que implementam as regras do jogo:
       - **Sobrevivência**: Uma célula viva com 2 ou 3 vizinhos vivos sobrevive para a próxima geração.
         ```cpp
-            if (vizinhos == 2 || vizinhos == 3) {
-                matrizNova[i][j] = 1;
+            if (matriz[i][j] == 1) { 
+                if (vizinhos == 2 || vizinhos == 3) {
+                    matrizNova[i][j] = 1;
+                }
             }
         ```
       - **Morte por Solidão e Morte por Superpopulação**:Uma célula viva com menos de 2 vizinhos vivos morre de solidão e uma célula viva com mais de 3 vizinhos vivos morre de superpopulação. 
         ```cpp
-            else if (vizinhos < 2 || vizinhos > 3) {
-                // se tiver menos de 2 morre por solidão e 
-                //se tiver mais de 3 morre por superpopulação
-                matrizNova[i][j] = 0;
+            if (matriz[i][j] == 1) { 
+                else if (vizinhos < 2 || vizinhos > 3) {
+                    // se tiver menos de 2 morre por solidão e 
+                    //se tiver mais de 3 morre por superpopulação
+                    matrizNova[i][j] = 0;
+                }
             }
         ```
       - **Reprodução**: Uma célula morta com exatamente 3 vizinhos vivos se torna viva na próxima geração.
         ```cpp
-            if (vizinhos == 3) {
-                matrizNova[i][j] = 1;
+            if (matriz[i][j] == 1) { 
+                if (vizinhos == 3) {
+                    matrizNova[i][j] = 1;
+                }
             }
         ```
 
@@ -164,13 +167,10 @@ Essa é uma visão geral detalhada de como o programa implementa o Jogo da Vida.
 
 ## 📂 Estrutura de Diretórios
 
-O programa segue uma estrutura de diretórios bem definida para organizar seus arquivos e recursos. Aqui está uma breve explicação de cada diretório:
+O programa segue uma estrutura de diretórios bem definida para organizar seus arquivos e recursos. 
 
-
-```
-.
-├── .vscode
-│   |   └── trasks.json
+```.
+|
 ├── build
 │   │   ├── objects
 │   │   |   ├── src
@@ -180,13 +180,6 @@ O programa segue uma estrutura de diretórios bem definida para organizar seus a
 ├── datasets
 │   │   ├── geracoes.mps
 │   │   └── input.mps
-├── images
-│   │   ├── imgs_readme
-│   │   |   ├── morte_por_solidao.png
-│   │   |   ├── morte_por_superpopulacao.png
-│   │   |   ├── reproducao.png
-│   │   |   ├── sobrevivencia.png
-│   │   |   └── solicitacaoDeGeracoes.png
 ├── src
 │   │   ├── jogoDaVida.cpp
 │   │   ├── jogoDaVida.Hpp
@@ -225,8 +218,63 @@ O programa segue uma estrutura de diretórios bem definida para organizar seus a
 6. Os resultados serão salvos no arquivo `geracoes.mps`.
 
 ## 📋 Exemplos
+Aqui está uma amostra de parte do arquivo `input.mps`, que contém a matriz inicial que será analisada:
+```
+    0 1 0 0 0 1 0 0
+    0 0 1 0 1 0 1 0
+    0 1 0 0 0 0 0 1
+    1 0 1 0 1 0 1 0
+    0 1 0 1 0 0 0 0
+    0 0 1 0 1 0 0 0
+```
 
-Você pode encontrar exemplos de arquivos de entrada (`input.mps`) e de saida (`geracoes.mps`) na pasta `datasets/`.
+Após o programa ler a matriz, será solicitado ao usuário o número de gerações. Simulando que o usuário digitou `5`, será colocado no arquivo de saída `gerações.mps` os resultados das gerações. Um exemplo abaixo: 
+```
+    0 1 0 0 0 1 0 0 
+    0 0 1 0 1 0 1 0 
+    0 1 0 0 0 0 0 1 
+    1 0 1 0 1 0 1 0 
+    0 1 0 1 0 0 0 0 
+    0 0 1 0 1 0 0 0 
+
+    0 0 0 0 0 1 0 0 
+    0 1 1 0 0 1 1 0 
+    0 1 1 0 0 0 1 1 
+    1 0 1 1 0 0 0 0 
+    0 1 0 0 1 1 0 0 
+    0 0 1 1 0 0 0 0 
+
+    0 0 0 0 0 1 1 0 
+    0 1 1 0 0 1 0 1 
+    1 0 0 0 0 1 1 1 
+    1 0 0 1 1 1 1 0 
+    0 1 0 0 1 0 0 0 
+    0 0 1 1 1 0 0 0 
+
+    0 0 0 0 0 1 1 0 
+    0 1 0 0 1 0 0 1 
+    1 0 1 1 0 0 0 1 
+    1 1 0 1 0 0 0 1 
+    0 1 0 0 0 0 0 0 
+    0 0 1 1 1 0 0 0 
+
+    0 0 0 0 0 1 1 0 
+    0 1 1 1 1 1 0 1 
+    1 0 0 1 1 0 1 1 
+    1 0 0 1 0 0 0 0 
+    1 1 0 0 1 0 0 0 
+    0 0 1 1 0 0 0 0 
+
+    0 0 1 1 0 1 1 0 
+    0 1 1 0 0 0 0 1 
+    1 0 0 0 0 0 1 1 
+    1 0 1 1 0 1 0 0 
+    1 1 0 0 1 0 0 0 
+    0 1 1 1 0 0 0 0 
+```
+
+A primeira matriz do arquivo é a matriz de entrada, e logo em seguida são as 5 matrizes que foram geradas.
+
 
 ## ⛏ Makefile
 
